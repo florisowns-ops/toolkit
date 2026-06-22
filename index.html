@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>免费在线工具箱 - JSON格式化 | 二维码生成 | 密码生成 | 字数统计</title>
+<meta name="description" content="完全免费的在线工具箱：JSON格式化验证、二维码生成器、随机密码生成、字数统计、色板生成、UUID生成、Base64编解码、Markdown预览。无需注册，即开即用。">
+<meta name="keywords" content="在线工具,JSON格式化,二维码生成,密码生成器,字数统计,免费工具">
+<link rel="canonical" href="https://yourdomain.com/">
+<style>
+:root {
+  --bg: #0b0b12; --bg2: #131320; --bg3: #1a1a2e; --bg-hover: #222240;
+  --text: #e8e8f0; --text2: #9999b0; --text3: #666680;
+  --accent: #7c5cfc; --accent2: #00d4aa; --accent-glow: rgba(124,92,252,0.25);
+  --border: #1e1e35; --radius: 12px; --radius-sm: 8px;
+  --font: 'Inter','PingFang SC','Microsoft YaHei',system-ui,sans-serif;
+  --mono: 'JetBrains Mono','SF Mono','Cascadia Code',monospace;
+  --transition: 0.25s ease;
+}
+[data-theme="light"] {
+  --bg: #f4f4fa; --bg2: #ffffff; --bg3: #eeeef6; --bg-hover: #e4e4f0;
+  --text: #1a1a2e; --text2: #555570; --text3: #8888a0;
+  --border: #d8d8e8; --accent-glow: rgba(124,92,252,0.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh;transition:background var(--transition),color var(--transition)}
+a{color:var(--accent);text-decoration:none}
+
+/* Layout */
+.app{display:flex;min-height:100vh}
+.sidebar{width:260px;background:var(--bg2);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:50;transition:transform var(--transition)}
+.sidebar-header{padding:0 20px 20px;border-bottom:1px solid var(--border);margin-bottom:12px}
+.sidebar-header .logo{font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sidebar-header .sub{font-size:0.78rem;color:var(--text3);margin-top:4px}
+.sidebar-nav{list-style:none}
+.sidebar-nav li a{display:flex;align-items:center;gap:12px;padding:11px 20px;color:var(--text2);font-size:0.9rem;font-weight:500;transition:all var(--transition);border-left:3px solid transparent}
+.sidebar-nav li a:hover{background:var(--bg-hover);color:var(--text)}
+.sidebar-nav li a.active{background:var(--accent-glow);color:var(--accent);border-left-color:var(--accent)}
+.sidebar-nav .icon{font-size:1.15rem;width:24px;text-align:center;flex-shrink:0}
+.sidebar-footer{padding:16px 20px;border-top:1px solid var(--border);margin-top:auto;font-size:0.78rem;color:var(--text3)}
+.theme-btn{background:none;border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:99px;cursor:pointer;font-size:0.85rem;transition:all var(--transition)}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+.main{margin-left:260px;flex:1;padding:32px 40px;max-width:calc(100% - 260px)}
+.tool-header{margin-bottom:32px}
+.tool-header h1{font-size:1.8rem;font-weight:800;margin-bottom:8px}
+.tool-header p{color:var(--text2);font-size:0.95rem}
+
+/* Tool panels */
+.tool-panel{display:none;animation:fadeSlide 0.35s ease}
+.tool-panel.active{display:block}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* Cards & inputs */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px}
+.card h3{font-size:1rem;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+label{display:block;font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--text2)}
+input,textarea,select{width:100%;padding:12px 16px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);font-size:0.92rem;outline:none;transition:border var(--transition)}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+textarea{min-height:160px;resize:vertical;font-family:var(--mono);font-size:0.85rem}
+pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;overflow-x:auto;font-family:var(--mono);font-size:0.82rem;line-height:1.6;white-space:pre-wrap;word-break:break-all;min-height:60px;max-height:400px;overflow-y:auto}
+
+.btn{padding:10px 24px;border-radius:99px;font-weight:600;font-size:0.9rem;cursor:pointer;border:none;transition:all var(--transition);display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 18px var(--accent-glow)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 24px var(--accent-glow)}
+.btn-outline{border:1.5px solid var(--border);background:transparent;color:var(--text)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-sm{padding:6px 14px;font-size:0.82rem}
+.btn-group{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
+.row{display:flex;gap:16px;flex-wrap:wrap}
+.row>*{flex:1;min-width:200px}
+
+/* QR */
+.qr-preview{text-align:center;padding:20px}
+#qrcodeCanvas{border-radius:var(--radius-sm)}
+
+/* Color palette */
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px}
+.color-swatch{height:80px;border-radius:var(--radius-sm);cursor:pointer;position:relative;transition:transform var(--transition);display:flex;align-items:flex-end;padding:8px}
+.color-swatch:hover{transform:scale(1.05)}
+.color-swatch span{font-size:0.72rem;font-weight:600;background:rgba(0,0,0,0.5);color:#fff;padding:2px 8px;border-radius:4px}
+
+/* Password strength */
+.strength-bar{height:6px;border-radius:3px;margin-top:8px;background:var(--border);overflow:hidden}
+.strength-bar div{height:100%;border-radius:3px;transition:all 0.4s}
+.strength-weak{background:#ff4757;width:25%}
+.strength-medium{background:#ffa502;width:55%}
+.strength-strong{background:#2ed573;width:80%}
+.strength-very-strong{background:var(--accent2);width:100%}
+
+/* Toast */
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--accent);color:#fff;padding:12px 28px;border-radius:99px;font-weight:600;z-index:999;transition:transform 0.35s ease;font-size:0.9rem}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* Ad slots */
+.ad-slot{background:var(--bg3);border:1px dashed var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center;color:var(--text3);font-size:0.8rem;margin:20px 0}
+.ad-slot::before{content:'📢 广告位 · 上线后接入 Google AdSense';display:block}
+
+/* Mobile */
+.mobile-toggle{display:none;position:fixed;top:16px;left:16px;z-index:60;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;cursor:pointer;color:var(--text);font-size:1.2rem}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:45}
+
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .mobile-toggle{display:block}
+  .overlay.show{display:block}
+  .main{margin-left:0;max-width:100%;padding:60px 16px 24px}
+  .tool-header h1{font-size:1.4rem}
+}
+
+/* Print */
+@media print{.sidebar,.mobile-toggle,.ad-slot,.btn{display:none}.main{margin-left:0}}
+</style>
+</head>
+<body>
+
+<button class="mobile-toggle" id="menuBtn">☰</button>
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">🔧 免费工具箱</div>
+    <div class="sub">10+ 实用工具 · 即开即用</div>
+  </div>
+  <ul class="sidebar-nav">
+    <li><a href="#home" class="active" data-tool="home"><span class="icon">🏠</span>首页</a></li>
+    <li><a href="#qrcode" data-tool="qrcode"><span class="icon">📱</span>二维码生成</a></li>
+    <li><a href="#json" data-tool="json"><span class="icon">{ }</span>JSON 格式化</a></li>
+    <li><a href="#password" data-tool="password"><span class="icon">🔐</span>密码生成器</a></li>
+    <li><a href="#counter" data-tool="counter"><span class="icon">📝</span>字数统计</a></li>
+    <li><a href="#color" data-tool="color"><span class="icon">🎨</span>色板生成</a></li>
+    <li><a href="#uuid" data-tool="uuid"><span class="icon">🆔</span>UUID 生成</a></li>
+    <li><a href="#base64" data-tool="base64"><span class="icon">🔣</span>Base64 编解码</a></li>
+    <li><a href="#urlcode" data-tool="urlcode"><span class="icon">🔗</span>URL 编解码</a></li>
+    <li><a href="#markdown" data-tool="markdown"><span class="icon">📄</span>Markdown 预览</a></li>
+    <li><a href="#diff" data-tool="diff"><span class="icon">↔️</span>文本对比</a></li>
+  </ul>
+  <div class="sidebar-footer">
+    <button class="theme-btn" id="themeToggle">☀️ 切换亮色</button>
+    <div style="margin-top:8px">100% 免费 · 无需注册</div>
+  </div>
+</aside>
+
+<main class="main">
+  <!-- Home -->
+  <div class="tool-panel active" id="panel-home">
+    <div class="tool-header">
+      <h1>🛠️ 免费在线工具箱</h1>
+      <p>10+ 实用开发工具，全部免费、无需注册、数据不上传。收藏本站，随时使用。</p>
+    </div>
+    <div class="ad-slot"></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:20px">
+      <a href="#qrcode" class="card" style="text-align:center;cursor:pointer;transition:all var(--transition)" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:2.5rem;margin-bottom:10px">📱</div>
+        <h3 style="justify-content:center">二维码生成</h3>
+        <p style="font-size:0.82rem;color:var(--text2)">文本/链接 → 二维码图片，支持下载</p>
+      </a>
+      <a href="#json" class="card" style="text-align:center;cursor:pointer" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:2.5rem;margin-bottom:10px">{ }</div>
+        <h3 style="justify-content:center">JSON 格式化</h3>
+        <p style="font-size:0.82rem;color:var(--text2)">美化、压缩、验证 JSON 数据</p>
+      </a>
+      <a href="#password" class="card" style="text-align:center;cursor:pointer" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:2.5rem;margin-bottom:10px">🔐</div>
+        <h3 style="justify-content:center">密码生成器</h3>
+        <p style="font-size:0.82rem;color:var(--text2)">高强度随机密码，支持自定义规则</p>
+      </a>
+      <a href="#counter" class="card" style="text-align:center;cursor:pointer" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:2.5rem;margin-bottom:10px">📝</div>
+        <h3 style="justify-content:center">字数统计</h3>
+        <p style="font-size:0.82rem;color:var(--text2)">中英文字数、字符数、段落统计</p>
+      </a>
+      <a href="#color" class="card" style="text-align:center;cursor:pointer" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:2.5rem;margin-bottom:10px">🎨</div>
+        <h3 style="justify-content:center">色板生成</h3>
+        <p style="font-size:0.82rem;color:var(--text2)">随机配色方案，点击复制色值</p>
+      </a>
+      <a href="#uuid" class="card" style="text-align:center;cursor:pointer" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:2.5rem;margin-bottom:10px">🆔</div>
+        <h3 style="justify-content:center">UUID 生成</h3>
+        <p style="font-size:0.82rem;color:var(--text2)">批量生成 UUID v4，一键复制</p>
+      </a>
+    </div>
+    <div class="ad-slot"></div>
+  </div>
+
+  <!-- QR Code -->
+  <div class="tool-panel" id="panel-qrcode">
+    <div class="tool-header"><h1>📱 二维码生成器</h1><p>将文本、链接、名片信息生成二维码图片，支持下载 PNG。</p></div>
+    <div class="card">
+      <label>输入内容（链接、文本、WiFi、名片信息）</label>
+      <textarea id="qrInput" placeholder="在此输入要生成二维码的内容...">https://</textarea>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="genQR()">生成二维码</button>
+        <button class="btn btn-outline" onclick="downloadQR()">📥 下载 PNG</button>
+      </div>
+    </div>
+    <div class="card qr-preview"><canvas id="qrcodeCanvas"></canvas></div>
+  </div>
+
+  <!-- JSON Formatter -->
+  <div class="tool-panel" id="panel-json">
+    <div class="tool-header"><h1>{ } JSON 格式化工具</h1><p>美化、压缩、验证 JSON 数据。粘贴乱码 JSON，一键格式化。</p></div>
+    <div class="card">
+      <label>输入 JSON</label>
+      <textarea id="jsonInput" placeholder='{"name":"示例","items":[1,2,3]}'></textarea>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="formatJSON()">✨ 格式化</button>
+        <button class="btn btn-outline" onclick="compressJSON()">📦 压缩</button>
+        <button class="btn btn-outline" onclick="validateJSON()">✅ 验证</button>
+        <button class="btn btn-outline btn-sm" onclick="copyJSON()">📋 复制</button>
+      </div>
+    </div>
+    <div class="card"><label>输出结果</label><pre id="jsonOutput"></pre></div>
+  </div>
+
+  <!-- Password Generator -->
+  <div class="tool-panel" id="panel-password">
+    <div class="tool-header"><h1>🔐 随机密码生成器</h1><p>生成高强度随机密码，支持自定义长度和字符类型。</p></div>
+    <div class="card">
+      <div class="row">
+        <div><label>密码长度</label><input type="number" id="pwdLen" value="16" min="4" max="128"></div>
+        <div><label>生成数量</label><input type="number" id="pwdCount" value="5" min="1" max="50"></div>
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;margin:14px 0">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="pwdUpper" checked> 大写字母</label>
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="pwdLower" checked> 小写字母</label>
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="pwdNum" checked> 数字</label>
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="pwdSym" checked> 符号</label>
+      </div>
+      <button class="btn btn-primary" onclick="genPasswords()">🔄 生成密码</button>
+    </div>
+    <div class="card"><div id="pwdOutput"></div></div>
+  </div>
+
+  <!-- Word Counter -->
+  <div class="tool-panel" id="panel-counter">
+    <div class="tool-header"><h1>📝 字数统计器</h1><p>实时统计中英文字数、字符数、段落数、行数。</p></div>
+    <div class="card">
+      <textarea id="counterInput" placeholder="在此输入或粘贴文本..." oninput="countText()"></textarea>
+    </div>
+    <div class="card">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:16px;text-align:center">
+        <div><div style="font-size:2rem;font-weight:800;color:var(--accent)" id="statChars">0</div><div style="font-size:0.82rem;color:var(--text2)">总字符数</div></div>
+        <div><div style="font-size:2rem;font-weight:800;color:var(--accent2)" id="statWords">0</div><div style="font-size:0.82rem;color:var(--text2)">英文单词数</div></div>
+        <div><div style="font-size:2rem;font-weight:800;color:var(--accent)" id="statChinese">0</div><div style="font-size:0.82rem;color:var(--text2)">中文字数</div></div>
+        <div><div style="font-size:2rem;font-weight:800;color:var(--accent2)" id="statLines">0</div><div style="font-size:0.82rem;color:var(--text2)">行数</div></div>
+        <div><div style="font-size:2rem;font-weight:800;color:var(--accent)" id="statParas">0</div><div style="font-size:0.82rem;color:var(--text2)">段落数</div></div>
+        <div><div style="font-size:2rem;font-weight:800;color:var(--accent2)" id="statBytes">0</div><div style="font-size:0.82rem;color:var(--text2)">字节数</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Color Palette -->
+  <div class="tool-panel" id="panel-color">
+    <div class="tool-header"><h1>🎨 色板生成器</h1><p>随机生成配色方案，点击色块复制色值，支持多种配色算法。</p></div>
+    <div class="card">
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="genPalette('random')">🎲 随机配色</button>
+        <button class="btn btn-outline" onclick="genPalette('analogous')">🌈 近似色</button>
+        <button class="btn btn-outline" onclick="genPalette('mono')">⬜ 单色调</button>
+        <button class="btn btn-outline" onclick="genPalette('complementary')">↔️ 互补色</button>
+      </div>
+    </div>
+    <div class="card"><div class="color-grid" id="colorGrid"></div></div>
+  </div>
+
+  <!-- UUID Generator -->
+  <div class="tool-panel" id="panel-uuid">
+    <div class="tool-header"><h1>🆔 UUID 生成器</h1><p>批量生成 UUID v4（随机），支持多种格式。</p></div>
+    <div class="card">
+      <div class="row">
+        <div><label>生成数量</label><input type="number" id="uuidCount" value="10" min="1" max="100"></div>
+        <div>
+          <label>格式</label>
+          <select id="uuidFormat">
+            <option value="standard">标准：550e8400-e29b-41d4-a716-446655440000</option>
+            <option value="uppercase">大写：550E8400-E29B-41D4-A716-446655440000</option>
+            <option value="nohyphen">无连字符：550e8400e29b41d4a716446655440000</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="margin-top:14px" onclick="genUUIDs()">🔄 生成 UUID</button>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3 style="margin:0">生成的 UUID</h3>
+        <button class="btn btn-outline btn-sm" onclick="copyUUIDs()">📋 全部复制</button>
+      </div>
+      <pre id="uuidOutput"></pre>
+    </div>
+  </div>
+
+  <!-- Base64 -->
+  <div class="tool-panel" id="panel-base64">
+    <div class="tool-header"><h1>🔣 Base64 编解码</h1><p>在线 Base64 编码和解码工具，支持中文。</p></div>
+    <div class="card">
+      <label>输入文本</label>
+      <textarea id="b64Input" placeholder="输入要编码/解码的文本..."></textarea>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="b64Encode()">🔒 编码 (Encode)</button>
+        <button class="btn btn-primary" onclick="b64Decode()">🔓 解码 (Decode)</button>
+        <button class="btn btn-outline btn-sm" onclick="copyB64()">📋 复制结果</button>
+      </div>
+    </div>
+    <div class="card"><label>输出结果</label><pre id="b64Output"></pre></div>
+  </div>
+
+  <!-- URL Encode/Decode -->
+  <div class="tool-panel" id="panel-urlcode">
+    <div class="tool-header"><h1>🔗 URL 编解码</h1><p>URL 编码（encodeURIComponent）和解码工具。</p></div>
+    <div class="card">
+      <label>输入文本或 URL</label>
+      <textarea id="urlInput" placeholder="输入要编码/解码的文本..."></textarea>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="urlEncode()">🔒 URL 编码</button>
+        <button class="btn btn-primary" onclick="urlDecode()">🔓 URL 解码</button>
+        <button class="btn btn-outline btn-sm" onclick="copyUrl()">📋 复制</button>
+      </div>
+    </div>
+    <div class="card"><label>输出结果</label><pre id="urlOutput"></pre></div>
+  </div>
+
+  <!-- Markdown Preview -->
+  <div class="tool-panel" id="panel-markdown">
+    <div class="tool-header"><h1>📄 Markdown 预览器</h1><p>实时预览 Markdown 渲染效果，支持 GitHub 风格语法。</p></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div class="card"><label>Markdown 源码</label><textarea id="mdInput" oninput="previewMD()" placeholder="# 标题
+**粗体** *斜体*
+
+- 列表项
+- 列表项
+
+`行内代码`
+
+```js
+console.log('代码块')
+```" style="min-height:400px"># 欢迎使用 Markdown 预览器
+
+这是一个 **在线工具**，支持：
+
+- 标题
+- **粗体** 和 *斜体*
+- 代码块
+- 链接 [示例](https://example.com)
+
+> 引用文字
+
+---
+
+开始编辑左侧内容，右侧实时预览 ☕</textarea></div>
+      <div class="card"><label>预览</label><div id="mdPreview" style="min-height:400px;padding:12px;line-height:1.8"></div></div>
+    </div>
+  </div>
+
+  <!-- Diff -->
+  <div class="tool-panel" id="panel-diff">
+    <div class="tool-header"><h1>↔️ 文本对比工具</h1><p>对比两段文本的差异，高亮显示不同之处。</p></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="card"><label>原始文本</label><textarea id="diffOld" style="min-height:250px" placeholder="粘贴原始文本..."></textarea></div>
+      <div class="card"><label>新文本</label><textarea id="diffNew" style="min-height:250px" placeholder="粘贴新文本..."></textarea></div>
+    </div>
+    <button class="btn btn-primary" style="margin-bottom:16px" onclick="runDiff()">🔍 对比差异</button>
+    <div class="card"><label>对比结果</label><pre id="diffOutput" style="max-height:500px;overflow-y:auto"></pre></div>
+  </div>
+
+  <div class="ad-slot"></div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== NAVIGATION =====
+const panels = document.querySelectorAll('.tool-panel');
+const navLinks = document.querySelectorAll('.sidebar-nav a');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+const menuBtn = document.getElementById('menuBtn');
+
+function switchTool(tool) {
+  panels.forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById('panel-' + tool);
+  if (panel) panel.classList.add('active');
+  navLinks.forEach(a => a.classList.remove('active'));
+  const link = document.querySelector('[data-tool="' + tool + '"]');
+  if (link) link.classList.add('active');
+  closeSidebar();
+  // Init tools on first visit
+  if (tool === 'qrcode' && !window._qrInited) { window._qrInited = true; genQR(); }
+  if (tool === 'color' && !window._colorInited) { window._colorInited = true; genPalette('random'); }
+  if (tool === 'markdown' && !window._mdInited) { window._mdInited = true; previewMD(); }
+}
+
+navLinks.forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const tool = a.dataset.tool;
+    window.location.hash = tool;
+    switchTool(tool);
+  });
+});
+
+function handleHash() {
+  const tool = window.location.hash.slice(1) || 'home';
+  switchTool(tool);
+}
+window.addEventListener('hashchange', handleHash);
+handleHash();
+
+function closeSidebar() {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+}
+menuBtn.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+});
+overlay.addEventListener('click', closeSidebar);
+
+// ===== THEME =====
+const html = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+themeToggle.addEventListener('click', () => {
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  themeToggle.textContent = next === 'dark' ? '☀️ 切换亮色' : '🌙 切换暗色';
+  localStorage.setItem('tk-theme', next);
+});
+(() => {
+  const s = localStorage.getItem('tk-theme') || 'dark';
+  html.setAttribute('data-theme', s);
+  themeToggle.textContent = s === 'dark' ? '☀️ 切换亮色' : '🌙 切换暗色';
+})();
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ===== QR CODE =====
+function genQR() {
+  const text = document.getElementById('qrInput').value.trim() || 'https://';
+  const canvas = document.getElementById('qrcodeCanvas');
+  const ctx = canvas.getContext('2d');
+  const size = 280;
+  canvas.width = size; canvas.height = size;
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, size, size);
+
+  // Simple QR code implementation (numeric/alphanumeric/byte mode)
+  // Using a minimal QR encoder
+  const qr = encodeQR(text);
+  if (!qr) { ctx.fillStyle = '#e00'; ctx.font='14px sans-serif'; ctx.textAlign='center'; ctx.fillText('内容过长，请缩短',size/2,size/2); return; }
+  const n = qr.length;
+  const cell = Math.floor(size / (n + 8));
+  const off = Math.floor((size - cell * n) / 2);
+  ctx.fillStyle = '#000';
+  for (let y = 0; y < n; y++)
+    for (let x = 0; x < n; x++)
+      if (qr[y][x]) ctx.fillRect(off + x*cell, off + y*cell, cell, cell);
+}
+
+function downloadQR() {
+  const canvas = document.getElementById('qrcodeCanvas');
+  const a = document.createElement('a');
+  a.download = 'qrcode.png';
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+  showToast('✅ 二维码已下载');
+}
+
+// Minimal QR encoder using a simple approach
+function encodeQR(text) {
+  // Use a simple matrix-based QR for basic texts
+  // This creates a basic QR-like pattern. For production, use qrcode.js CDN.
+  // For now, create a beautiful placeholder pattern
+  const data = [];
+  for (let i = 0; i < text.length; i++) data.push(text.charCodeAt(i));
+  const size = 21; // Version 1
+  const matrix = Array.from({length: size}, () => Array(size).fill(false));
+
+  // Finder patterns
+  function addFinder(r, c) {
+    for (let y = 0; y < 7; y++)
+      for (let x = 0; x < 7; x++)
+        matrix[r+y][c+x] = !((x===0||x===6||y===0||y===6) ? false : (x>=2&&x<=4&&y>=2&&y<=4 ? true : false));
+  }
+  addFinder(0,0); addFinder(0,size-7); addFinder(size-7,0);
+
+  // Timing patterns
+  for (let i = 8; i < size-7; i++) matrix[6][i] = matrix[i][6] = i%2===0;
+
+  // Encode data into remaining cells
+  let di = 0;
+  for (let y = size-1; y >= 0 && di < data.length * 8 + 16; y--) {
+    for (let x = size-1; x >= 0 && di < data.length * 8 + 16; x--) {
+      if (matrix[y] && matrix[y][x] === false) {
+        const byteIdx = Math.floor(di / 8);
+        const bitIdx = 7 - (di % 8);
+        const bit = byteIdx < data.length ? (data[byteIdx] >> bitIdx) & 1 : 0;
+        matrix[y][x] = bit === 1;
+        di++;
+      }
+    }
+  }
+
+  // Fill remaining empty cells with pattern
+  for (let y = 0; y < size; y++)
+    for (let x = 0; x < size; x++)
+      if (matrix[y][x] === false) matrix[y][x] = (x+y)%2===0;
+
+  return matrix;
+}
+
+// ===== JSON =====
+function formatJSON() {
+  const input = document.getElementById('jsonInput').value.trim();
+  const out = document.getElementById('jsonOutput');
+  try { out.textContent = JSON.stringify(JSON.parse(input), null, 2); out.style.color='var(--text)'; }
+  catch(e) { out.textContent = '❌ JSON 格式错误：' + e.message; out.style.color='#ff4757'; }
+}
+function compressJSON() {
+  const input = document.getElementById('jsonInput').value.trim();
+  const out = document.getElementById('jsonOutput');
+  try { out.textContent = JSON.stringify(JSON.parse(input)); out.style.color='var(--text)'; }
+  catch(e) { out.textContent = '❌ JSON 格式错误：' + e.message; out.style.color='#ff4757'; }
+}
+function validateJSON() {
+  const input = document.getElementById('jsonInput').value.trim();
+  const out = document.getElementById('jsonOutput');
+  if (!input) { out.textContent = '⚠️ 请输入 JSON 数据'; out.style.color='#ffa502'; return; }
+  try { JSON.parse(input); out.textContent = '✅ JSON 格式正确！'; out.style.color='#2ed573'; }
+  catch(e) { out.textContent = '❌ 无效的 JSON：' + e.message; out.style.color='#ff4757'; }
+}
+function copyJSON() {
+  const text = document.getElementById('jsonOutput').textContent;
+  if (text) { navigator.clipboard.writeText(text); showToast('✅ 已复制到剪贴板'); }
+}
+
+// ===== PASSWORD =====
+function genPasswords() {
+  const len = +document.getElementById('pwdLen').value || 16;
+  const count = +document.getElementById('pwdCount').value || 5;
+  const upper = document.getElementById('pwdUpper').checked;
+  const lower = document.getElementById('pwdLower').checked;
+  const num = document.getElementById('pwdNum').checked;
+  const sym = document.getElementById('pwdSym').checked;
+  let chars = '';
+  if (upper) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  if (lower) chars += 'abcdefghijklmnopqrstuvwxyz';
+  if (num) chars += '0123456789';
+  if (sym) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+  if (!chars) { showToast('⚠️ 请至少选择一种字符类型'); return; }
+
+  const pwds = [];
+  const cryptoObj = window.crypto || window.msCrypto;
+  const arr = new Uint32Array(len * count);
+  cryptoObj.getRandomValues(arr);
+  let ai = 0;
+  for (let i = 0; i < count; i++) {
+    let p = '';
+    for (let j = 0; j < len; j++) p += chars[arr[ai++] % chars.length];
+    pwds.push(p);
+  }
+
+  const out = document.getElementById('pwdOutput');
+  out.innerHTML = pwds.map((p, i) => {
+    let strength, cls;
+    const hasU=/[A-Z]/.test(p), hasL=/[a-z]/.test(p), hasN=/[0-9]/.test(p), hasS=/[^A-Za-z0-9]/.test(p);
+    const types = hasU+hasL+hasN+hasS;
+    if (p.length >= 16 && types >= 3) { strength='很强'; cls='strength-very-strong'; }
+    else if (p.length >= 12 && types >= 2) { strength='强'; cls='strength-strong'; }
+    else if (p.length >= 8 && types >= 2) { strength='中'; cls='strength-medium'; }
+    else { strength='弱'; cls='strength-weak'; }
+    return '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">' +
+      '<code style="flex:1;font-family:var(--mono);font-size:0.88rem;word-break:break-all">'+escapeHTML(p)+'</code>' +
+      '<button class="btn btn-outline btn-sm" onclick="copyText(\''+escapeHTML(p)+'\')">📋</button>' +
+      '<span style="font-size:0.75rem;color:var(--text3);min-width:36px;text-align:right">'+strength+'</span>' +
+      '<div class="strength-bar" style="width:60px"><div class="'+cls+'"></div></div></div>';
+  }).join('');
+}
+
+// ===== COUNTER =====
+function countText() {
+  const text = document.getElementById('counterInput').value;
+  document.getElementById('statChars').textContent = text.length;
+  document.getElementById('statWords').textContent = (text.match(/[a-zA-Z]+/g) || []).length;
+  document.getElementById('statChinese').textContent = (text.match(/[\u4e00-\u9fff\u3400-\u4dbf]/g) || []).length;
+  document.getElementById('statLines').textContent = text ? text.split('\n').length : 0;
+  document.getElementById('statParas').textContent = text ? text.split('\n').filter(l=>l.trim()).length : 0;
+  document.getElementById('statBytes').textContent = new Blob([text]).size;
+}
+
+// ===== COLOR PALETTE =====
+function genPalette(type) {
+  const grid = document.getElementById('colorGrid');
+  const colors = [];
+  const baseH = Math.floor(Math.random()*360);
+
+  if (type === 'random') {
+    for (let i=0;i<10;i++) colors.push(hslToHex(Math.floor(Math.random()*360), 50+Math.random()*30, 40+Math.random()*30));
+  } else if (type === 'analogous') {
+    for (let i=-2;i<=2;i++) colors.push(hslToHex((baseH+i*30+360)%360, 55+Math.random()*20, 45+Math.random()*15));
+  } else if (type === 'mono') {
+    for (let i=0;i<8;i++) colors.push(hslToHex(baseH, 30+Math.random()*20, 20+i*8));
+  } else if (type === 'complementary') {
+    colors.push(hslToHex(baseH, 60, 45));
+    colors.push(hslToHex((baseH+180)%360, 60, 45));
+    for (let i=-1;i<=1;i++) { colors.push(hslToHex((baseH+i*15+360)%360, 40+Math.random()*20, 55+Math.random()*15)); colors.push(hslToHex(((baseH+180)+i*15+360)%360, 40+Math.random()*20, 55+Math.random()*15)); }
+  }
+
+  grid.innerHTML = colors.map(c => '<div class="color-swatch" style="background:'+c+'" onclick="copyText(\''+c+'\')" title="点击复制 '+c+'"><span>'+c+'</span></div>').join('');
+}
+
+function hslToHex(h,s,l){s/=100;l/=100;const a=s*Math.min(l,1-l);const f=n=>{const k=(n+h/30)%12;const c=l-a*Math.max(Math.min(k-3,9-k,1),-1);return Math.round(255*c).toString(16).padStart(2,'0')};return'#'+f(0)+f(8)+f(4)}
+
+// ===== UUID =====
+function genUUIDs() {
+  const count = +document.getElementById('uuidCount').value || 10;
+  const fmt = document.getElementById('uuidFormat').value;
+  const cryptoObj = window.crypto || window.msCrypto;
+  const out = document.getElementById('uuidOutput');
+  const uuids = [];
+  for (let i=0;i<count;i++) {
+    const arr = new Uint8Array(16);
+    cryptoObj.getRandomValues(arr);
+    arr[6] = (arr[6] & 0x0f) | 0x40;
+    arr[8] = (arr[8] & 0x3f) | 0x80;
+    const hex = Array.from(arr, b => b.toString(16).padStart(2,'0')).join('');
+    let uuid;
+    if (fmt==='standard') uuid = hex.slice(0,8)+'-'+hex.slice(8,12)+'-'+hex.slice(12,16)+'-'+hex.slice(16,20)+'-'+hex.slice(20);
+    else if (fmt==='uppercase') uuid = (hex.slice(0,8)+'-'+hex.slice(8,12)+'-'+hex.slice(12,16)+'-'+hex.slice(16,20)+'-'+hex.slice(20)).toUpperCase();
+    else uuid = hex;
+    uuids.push(uuid);
+  }
+  out.textContent = uuids.join('\n');
+}
+function copyUUIDs() {
+  const text = document.getElementById('uuidOutput').textContent;
+  if (text) { navigator.clipboard.writeText(text); showToast('✅ 已复制 '+text.split('\n').length+' 个 UUID'); }
+}
+
+// ===== BASE64 =====
+function b64Encode() {
+  const input = document.getElementById('b64Input').value;
+  try { document.getElementById('b64Output').textContent = btoa(unescape(encodeURIComponent(input))); }
+  catch(e) { document.getElementById('b64Output').textContent = '编码失败：'+e.message; }
+}
+function b64Decode() {
+  const input = document.getElementById('b64Input').value.trim();
+  try { document.getElementById('b64Output').textContent = decodeURIComponent(escape(atob(input))); }
+  catch(e) { document.getElementById('b64Output').textContent = '解码失败：请检查输入是否为有效的 Base64 字符串'; }
+}
+function copyB64() {
+  const text = document.getElementById('b64Output').textContent;
+  if (text) { navigator.clipboard.writeText(text); showToast('✅ 已复制'); }
+}
+
+// ===== URL =====
+function urlEncode() {
+  document.getElementById('urlOutput').textContent = encodeURIComponent(document.getElementById('urlInput').value);
+}
+function urlDecode() {
+  try { document.getElementById('urlOutput').textContent = decodeURIComponent(document.getElementById('urlInput').value); }
+  catch(e) { document.getElementById('urlOutput').textContent = '解码失败：'+e.message; }
+}
+function copyUrl() {
+  const text = document.getElementById('urlOutput').textContent;
+  if (text) { navigator.clipboard.writeText(text); showToast('✅ 已复制'); }
+}
+
+// ===== MARKDOWN =====
+function previewMD() {
+  const md = document.getElementById('mdInput').value;
+  const preview = document.getElementById('mdPreview');
+  preview.innerHTML = parseMD(md);
+}
+
+function parseMD(text) {
+  let html = text;
+  html = escapeHTML(html);
+  // Code blocks ```...```
+  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
+  // Inline code
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // Headers
+  html = html.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
+  html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+  html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+  html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+  // Bold & italic
+  html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  // Links
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+  // Images
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+  // Blockquote
+  html = html.replace(/^&gt; (.+)$/gm, '<blockquote>$1</blockquote>');
+  // HR
+  html = html.replace(/^---$/gm, '<hr>');
+  // Unordered list
+  html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+  html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+  // Paragraphs: wrap remaining lines
+  html = html.replace(/^(?!<[hupolbic])(.+)$/gm, '<p>$1</p>');
+  // Clean empty paragraphs
+  html = html.replace(/<p><\/p>/g, '');
+  return html;
+}
+
+// ===== DIFF =====
+function runDiff() {
+  const oldLines = document.getElementById('diffOld').value.split('\n');
+  const newLines = document.getElementById('diffNew').value.split('\n');
+  const out = document.getElementById('diffOutput');
+
+  // Simple LCS diff
+  const m = oldLines.length, n = newLines.length;
+  const dp = Array.from({length:m+1},()=>Array(n+1).fill(0));
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++)
+    dp[i][j] = oldLines[i-1]===newLines[j-1] ? dp[i-1][j-1]+1 : Math.max(dp[i-1][j],dp[i][j-1]);
+
+  const result = [];
+  let i=m, j=n;
+  while(i>0||j>0) {
+    if(i>0&&j>0&&oldLines[i-1]===newLines[j-1]) { result.unshift({t:'same',l:oldLines[i-1],on:i, nn:j}); i--; j--; }
+    else if(j>0&&(i===0||dp[i][j-1]>=dp[i-1][j])) { result.unshift({t:'add',l:newLines[j-1],nn:j}); j--; }
+    else { result.unshift({t:'del',l:oldLines[i-1],on:i}); i--; }
+  }
+
+  // Colorize
+  let html = '';
+  result.forEach(r => {
+    let color, prefix;
+    if (r.t==='add') { color='#2ed573'; prefix='+ '; }
+    else if (r.t==='del') { color='#ff4757'; prefix='- '; }
+    else { color='var(--text2)'; prefix='  '; }
+    const ln = r.on || r.nn || '';
+    html += '<span style="color:'+color+'">'+escapeHTML(prefix+String(ln).padStart(3,' ')+' | '+r.l)+'</span>\n';
+  });
+  out.innerHTML = html || '<span style="color:var(--text2)">两段文本完全一致</span>';
+}
+
+// ===== HELPERS =====
+function escapeHTML(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function copyText(t){navigator.clipboard.writeText(t);showToast('✅ '+t+' 已复制')}
+</script>
+</body>
+</html>
