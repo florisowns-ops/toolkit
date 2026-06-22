@@ -191,6 +191,8 @@ pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radi
     <li><a href="#urlcode" data-tool="urlcode"><span class="icon">🔗</span>URL 编解码</a></li>
     <li><a href="#markdown" data-tool="markdown"><span class="icon">📄</span>Markdown 预览</a></li>
     <li><a href="#diff" data-tool="diff"><span class="icon">↔️</span>文本对比</a></li>
+        <li style="margin-top:12px;padding-left:20px;font-size:0.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px">支持本站</li>
+    <li><a href="#sponsor" data-tool="sponsor"><span class="icon">❤️</span>赞助支持</a></li>
     <li style="margin-top:12px;padding-left:20px;font-size:0.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px">更多工具</li>
     <li><a href="#timestamp" data-tool="timestamp"><span class="icon">⏰</span>时间戳转换</a></li>
     <li><a href="#regex" data-tool="regex"><span class="icon">🔍</span>正则测试</a></li>
@@ -198,11 +200,7 @@ pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radi
   </ul>
   <div class="donate-box">
     <p style="font-size:0.78rem;margin-bottom:6px">☕ 觉得好用？赞助支持</p>
-    <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
-      <a href="https://www.buymeacoffee.com/florisowns" target="_blank" class="donate-btn" style="font-size:0.72rem">🧧 Buy Me a Coffee</a>
-      <a href="#" onclick="showDonateQR();return false" class="donate-btn" style="font-size:0.72rem;background:#07c160;color:#fff">💚 微信赞赏</a>
-      <a href="#" onclick="showDonateQR();return false" class="donate-btn" style="font-size:0.72rem;background:#1677ff;color:#fff">💙 支付宝</a>
-    </div>
+    <a href="#sponsor" data-tool="sponsor" class="donate-btn" style="font-size:0.82rem">❤️ 查看赞助方式</a>
   </div>
   <div class="sidebar-footer">
     <button class="theme-btn" id="themeToggle">☀️ 切换亮色</button>
@@ -553,6 +551,55 @@ console.log('代码块')
       <div class="row" style="margin-top:12px">
         <div><label>SHA-256</label><div style="display:flex;gap:8px"><input type="text" id="hashSHA256" readonly style="font-size:0.78rem"><button class="btn btn-outline btn-sm" onclick="copyText(document.getElementById('hashSHA256').value)">📋</button></div></div>
         <div><label>SHA-512</label><div style="display:flex;gap:8px"><input type="text" id="hashSHA512" readonly style="font-size:0.74rem"><button class="btn btn-outline btn-sm" onclick="copyText(document.getElementById('hashSHA512').value)">📋</button></div></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Sponsor Page -->
+  <div class="tool-panel" id="panel-sponsor">
+    <div class="tool-header">
+      <h1>❤️ 赞助支持</h1>
+      <p>这个工具箱完全免费、无广告（AdSense审核中）。如果你觉得好用，可以用以下方式支持我继续开发。</p>
+    </div>
+
+    <div class="card" style="text-align:center;padding:32px">
+      <div style="font-size:3rem;margin-bottom:12px">☕</div>
+      <h3>请我喝杯咖啡</h3>
+      <p style="color:var(--text2);margin-bottom:0">你的每一份支持，都让我有动力继续维护和开发新工具。</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:20px">
+      <div class="card" style="text-align:center">
+        <div style="font-size:2rem;margin-bottom:8px">💚</div>
+        <h3>微信赞赏</h3>
+        <p style="color:var(--text2);font-size:0.85rem;margin-bottom:16px">打开微信扫一扫</p>
+        <div style="background:var(--bg3);border-radius:12px;padding:20px;display:inline-block">
+          <div style="width:200px;height:200px;background:var(--bg);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:0.8rem;flex-direction:column;gap:8px">
+            <span style="font-size:2rem">📷</span>
+            <span>替换为你的<br>微信收款码</span>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:2rem;margin-bottom:8px">💙</div>
+        <h3>支付宝赞赏</h3>
+        <p style="color:var(--text2);font-size:0.85rem;margin-bottom:16px">打开支付宝扫一扫</p>
+        <div style="background:var(--bg3);border-radius:12px;padding:20px;display:inline-block">
+          <div style="width:200px;height:200px;background:var(--bg);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:0.8rem;flex-direction:column;gap:8px">
+            <span style="font-size:2rem">📷</span>
+            <span>替换为你的<br>支付宝收款码</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;text-align:center">
+      <h3>🙏 感谢每一位赞助者</h3>
+      <p style="color:var(--text2);font-size:0.85rem">你的名字将出现在这里</p>
+      <div style="margin-top:16px;padding:20px;background:var(--bg3);border-radius:12px;color:var(--text3);font-size:0.85rem">
+        还没有赞助记录 — 成为第一个支持者 🥇
       </div>
     </div>
   </div>
@@ -1043,22 +1090,6 @@ function copyText(t){navigator.clipboard.writeText(t);showToast('✅ '+t+' 已�
 </script>
 
 
-<!-- Donate QR Modal -->
-<div class="donate-modal" id="donateModal" onclick="this.classList.remove('show')">
-  <div class="donate-modal-content" onclick="event.stopPropagation()">
-    <h3>📱 扫码赞赏</h3>
-    <p style="color:var(--text2);font-size:0.82rem;margin-bottom:16px">保存图片 → 微信/支付宝扫码</p>
-    <div style="background:var(--bg3);border-radius:8px;padding:16px;display:inline-block">
-      <div style="width:200px;height:200px;background:var(--bg);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:0.8rem">
-        🖼️ 请替换为你的收款码图片
-      </div>
-    </div>
-    <p style="color:var(--text3);font-size:0.72rem;margin-top:12px">替换 donate-qr.png 为你的收款码</p>
-    <button class="donate-modal-close" onclick="document.getElementById('donateModal').classList.remove('show')">关闭</button>
-  </div>
-</div>
-
-
 <!-- Sticky bottom ad -->
 <div class="sticky-ad" id="stickyAd">
   <button class="sticky-ad-close" onclick="document.getElementById('stickyAd').style.display='none'">✕</button>
@@ -1101,7 +1132,7 @@ function copyText(t){navigator.clipboard.writeText(t);showToast('✅ '+t+' 已�
     <div>
       <h4>关于</h4>
       <ul>
-        <li><a href="https://www.buymeacoffee.com/florisowns" target="_blank">☕ 赞助支持</a></li>
+        <li><a href="#sponsor" data-tool="sponsor">☕ 赞助支持</a></li>
         <li><a href="https://github.com/florisowns-ops/toolkit" target="_blank">GitHub 开源</a></li>
       </ul>
     </div>
@@ -1111,12 +1142,6 @@ function copyText(t){navigator.clipboard.writeText(t);showToast('✅ '+t+' 已�
   </div>
 </footer>
 
-
-<script>
-function showDonateQR() {
-  document.getElementById('donateModal').classList.add('show');
-}
-</script>
 
 </body>
 </html>
