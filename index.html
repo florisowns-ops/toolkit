@@ -147,8 +147,27 @@ pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radi
 .share-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;cursor:pointer;transition:all var(--transition);border:1px solid var(--border);background:var(--bg);color:var(--text2)}
 .share-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
 
+
+/* Donate QR Modal */
+.donate-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;justify-content:center;align-items:center}
+.donate-modal.show{display:flex}
+.donate-modal-content{background:var(--bg2);border-radius:var(--radius);padding:32px;text-align:center;max-width:340px;width:90%}
+.donate-modal-content h3{margin-bottom:16px}
+.donate-modal-content img{width:200px;height:200px;border-radius:8px;margin-bottom:12px}
+.donate-modal-close{background:none;border:1px solid var(--border);color:var(--text);padding:8px 24px;border-radius:99px;cursor:pointer;margin-top:12px;font-size:0.85rem}
+
 @media print{.sidebar,.mobile-toggle,.ad-slot,.btn,.sticky-ad{display:none}.main{margin-left:0}}
 </style>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+
 </head>
 <body>
 
@@ -178,8 +197,12 @@ pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radi
     <li><a href="#hash" data-tool="hash"><span class="icon">🔑</span>哈希生成</a></li>
   </ul>
   <div class="donate-box">
-    <p>☕ 觉得好用？请喝杯咖啡</p>
-    <a href="https://www.buymeacoffee.com/florisowns" target="_blank" class="donate-btn">🧧 赞助支持</a>
+    <p style="font-size:0.78rem;margin-bottom:6px">☕ 觉得好用？赞助支持</p>
+    <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+      <a href="https://www.buymeacoffee.com/florisowns" target="_blank" class="donate-btn" style="font-size:0.72rem">🧧 Buy Me a Coffee</a>
+      <a href="#" onclick="showDonateQR();return false" class="donate-btn" style="font-size:0.72rem;background:#07c160;color:#fff">💚 微信赞赏</a>
+      <a href="#" onclick="showDonateQR();return false" class="donate-btn" style="font-size:0.72rem;background:#1677ff;color:#fff">💙 支付宝</a>
+    </div>
   </div>
   <div class="sidebar-footer">
     <button class="theme-btn" id="themeToggle">☀️ 切换亮色</button>
@@ -199,6 +222,31 @@ pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radi
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   <div style="font-size:0.65rem;color:var(--text3);text-align:center;padding:4px">广告</div>
 </div>
+
+
+
+        <!-- Sponsored / Affiliate -->
+    <div class="card" style="margin-top:24px;border-color:var(--accent);background:linear-gradient(135deg,var(--bg2),var(--bg3))">
+      <h3>🤝 推荐工具 & 合作伙伴</h3>
+      <p style="font-size:0.82rem;color:var(--text2);margin-bottom:16px">以下是我们精选的优质服务，通过本站链接注册可获得专属优惠。</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+        <a href="https://www.vultr.com/?ref=florisowns" target="_blank" class="card" style="text-align:center;padding:16px;text-decoration:none;color:var(--text);transition:all var(--transition)" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:1.5rem;margin-bottom:6px">☁️</div>
+          <strong>Vultr VPS</strong>
+          <p style="font-size:0.75rem;color:var(--text3);margin-top:4px">高性能云服务器 $2.5/月起</p>
+        </a>
+        <a href="https://www.digitalocean.com/?refcode=florisowns" target="_blank" class="card" style="text-align:center;padding:16px;text-decoration:none;color:var(--text);transition:all var(--transition)" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:1.5rem;margin-bottom:6px">🌊</div>
+          <strong>DigitalOcean</strong>
+          <p style="font-size:0.75rem;color:var(--text3);margin-top:4px">开发者云平台 免费$200额度</p>
+        </a>
+        <a href="https://www.namecheap.com/" target="_blank" class="card" style="text-align:center;padding:16px;text-decoration:none;color:var(--text);transition:all var(--transition)" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:1.5rem;margin-bottom:6px">🌐</div>
+          <strong>Namecheap 域名</strong>
+          <p style="font-size:0.75rem;color:var(--text3);margin-top:4px">域名注册 $0.99/年起</p>
+        </a>
+      </div>
+    </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:20px">
       <a href="#qrcode" class="card" style="text-align:center;cursor:pointer;transition:all var(--transition)" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
         <div style="font-size:2.5rem;margin-bottom:10px">📱</div>
@@ -378,6 +426,9 @@ pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radi
   <!-- Markdown Preview -->
   <div class="tool-panel" id="panel-markdown">
     <div class="tool-header"><h1>📄 Markdown 预览器</h1><p>实时预览 Markdown 渲染效果，支持 GitHub 风格语法。</p></div>
+
+
+
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
       <div class="card"><label>Markdown 源码</label><textarea id="mdInput" oninput="previewMD()" placeholder="# 标题
 **粗体** *斜体*
@@ -510,6 +561,9 @@ console.log('代码块')
   <!-- Diff -->
   <div class="tool-panel" id="panel-diff">
     <div class="tool-header"><h1>↔️ 文本对比工具</h1><p>对比两段文本的差异，高亮显示不同之处。</p></div>
+
+
+
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
       <div class="card"><label>原始文本</label><textarea id="diffOld" style="min-height:250px" placeholder="粘贴原始文本..."></textarea></div>
       <div class="card"><label>新文本</label><textarea id="diffNew" style="min-height:250px" placeholder="粘贴新文本..."></textarea></div>
@@ -988,6 +1042,23 @@ function escapeHTML(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').repla
 function copyText(t){navigator.clipboard.writeText(t);showToast('✅ '+t+' 已复制')}
 </script>
 
+
+<!-- Donate QR Modal -->
+<div class="donate-modal" id="donateModal" onclick="this.classList.remove('show')">
+  <div class="donate-modal-content" onclick="event.stopPropagation()">
+    <h3>📱 扫码赞赏</h3>
+    <p style="color:var(--text2);font-size:0.82rem;margin-bottom:16px">保存图片 → 微信/支付宝扫码</p>
+    <div style="background:var(--bg3);border-radius:8px;padding:16px;display:inline-block">
+      <div style="width:200px;height:200px;background:var(--bg);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:0.8rem">
+        🖼️ 请替换为你的收款码图片
+      </div>
+    </div>
+    <p style="color:var(--text3);font-size:0.72rem;margin-top:12px">替换 donate-qr.png 为你的收款码</p>
+    <button class="donate-modal-close" onclick="document.getElementById('donateModal').classList.remove('show')">关闭</button>
+  </div>
+</div>
+
+
 <!-- Sticky bottom ad -->
 <div class="sticky-ad" id="stickyAd">
   <button class="sticky-ad-close" onclick="document.getElementById('stickyAd').style.display='none'">✕</button>
@@ -1039,6 +1110,13 @@ function copyText(t){navigator.clipboard.writeText(t);showToast('✅ '+t+' 已�
     <p>© 2026 免费在线工具箱 | <a href="https://toolkit-delta-ten.vercel.app">toolkit-delta-ten.vercel.app</a> | 赞助支持让工具保持免费</p>
   </div>
 </footer>
+
+
+<script>
+function showDonateQR() {
+  document.getElementById('donateModal').classList.add('show');
+}
+</script>
 
 </body>
 </html>
